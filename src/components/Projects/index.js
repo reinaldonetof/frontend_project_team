@@ -1,16 +1,21 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+
+import { connect } from "react-redux";
 
 import { Container, Project } from "./styles";
 import Button from "~/styles/components/Button";
 
-export default class Projects extends Component {
+class Projects extends Component {
   render() {
+    const { activeTeam } = this.props;
+    if (!activeTeam) return null;
     return (
       <Container>
         <header>
-          <h1>Rocketseat</h1>
+          <h1>{activeTeam.name}</h1>
           <div>
-            <Button onClicke={() => {}}> + Novo </Button>
+            <Button onClick={() => {}}> + Novo </Button>
             <Button onClick={() => {}}>Membros</Button>
           </div>
         </header>
@@ -31,3 +36,15 @@ export default class Projects extends Component {
     );
   }
 }
+
+Projects.propTypes = {
+  activeTeam: PropTypes.shape({
+    name: PropTypes.string,
+  }).isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  activeTeam: state.teams.active,
+});
+
+export default connect(mapStateToProps)(Projects);
