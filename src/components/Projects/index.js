@@ -13,7 +13,7 @@ class Projects extends Component {
     getProjectsRequest: PropTypes.func.isRequired,
     activeTeam: PropTypes.shape({
       name: PropTypes.string,
-    }).isRequired,
+    }),
   };
 
   componentDidMount() {

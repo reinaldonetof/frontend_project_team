@@ -17,6 +17,8 @@ export default function* rootSaga() {
     takeLatest(TeamsTypes.GET_TEAMS_REQUEST, getTeams),
     takeLatest(TeamsTypes.CREATE_TEAM_REQUEST, createTeam),
 
+    takeLatest(TeamsTypes.SELECT_TEAM, getProjects),
+
     takeLatest(ProjectsTypes.GET_PROJECTS_REQUEST, getProjects),
   ]);
 }
