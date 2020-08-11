@@ -3,7 +3,7 @@ import { all, takeLatest } from "redux-saga/effects";
 import { signIn } from "./auth";
 import { AuthTypes } from "../ducks/auth";
 
-import { getTeams, selectTeam } from "./teams";
+import { getTeams } from "./teams";
 import { TeamsTypes } from "../ducks/teams";
 
 export default function* rootSaga() {

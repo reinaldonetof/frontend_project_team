@@ -16,7 +16,7 @@ api.interceptors.request.use((config) => {
   }
 
   if (team) {
-    headers.TEAM = team[0].slug;
+    headers.TEAM = team.slug;
   }
 
   return { ...config, headers };
