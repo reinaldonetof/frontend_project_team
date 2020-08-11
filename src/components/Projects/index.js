@@ -2,13 +2,30 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import ProjectsActions from "~/store/ducks/projects";
 
 import { Container, Project } from "./styles";
 import Button from "~/styles/components/Button";
 
 class Projects extends Component {
+  static propTypes = {
+    getProjectsRequest: PropTypes.func.isRequired,
+    activeTeam: PropTypes.shape({
+      name: PropTypes.string,
+    }).isRequired,
+  };
+
+  componentDidMount() {
+    const { activeTeam, getProjectsRequest } = this.props;
+
+    if (activeTeam) {
+      getProjectsRequest();
+    }
+  }
+
   render() {
-    const { activeTeam } = this.props;
+    const { activeTeam, projects } = this.props;
     if (!activeTeam) return null;
     return (
       <Container>
@@ -20,31 +37,22 @@ class Projects extends Component {
           </div>
         </header>
 
-        <Project>
-          <p>Aplicação com React Native</p>
-        </Project>
-        <Project>
-          <p>Aplicação com React Native</p>
-        </Project>
-        <Project>
-          <p>Aplicação com React Native</p>
-        </Project>
-        <Project>
-          <p>Aplicação com React Native</p>
-        </Project>
+        {projects.data.map((project) => (
+          <Project key={project.id}>
+            <p>{project.title}</p>
+          </Project>
+        ))}
       </Container>
     );
   }
 }
 
-Projects.propTypes = {
-  activeTeam: PropTypes.shape({
-    name: PropTypes.string,
-  }).isRequired,
-};
-
 const mapStateToProps = (state) => ({
   activeTeam: state.teams.active,
+  projects: state.projects,
 });
 
-export default connect(mapStateToProps)(Projects);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(ProjectsActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Projects);
