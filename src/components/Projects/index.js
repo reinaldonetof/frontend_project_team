@@ -26,14 +26,19 @@ class Projects extends Component {
   }
 
   render() {
-    const { activeTeam, projects } = this.props;
+    const {
+      activeTeam,
+      projects,
+      openProjectModal,
+      closeProjectModal,
+    } = this.props;
     if (!activeTeam) return null;
     return (
       <Container>
         <header>
           <h1>{activeTeam.name}</h1>
           <div>
-            <Button onClick={() => {}}> + Novo </Button>
+            <Button onClick={openProjectModal}> + Novo </Button>
             <Button onClick={() => {}}>Membros</Button>
           </div>
         </header>
@@ -48,9 +53,18 @@ class Projects extends Component {
           <Modal>
             <h1>Criar projeto</h1>
 
-            <from onSubmit={() => {}}>
+            <form onSubmit={() => {}}>
               <span>NOME</span>
-            </from>
+              <input name="newProject" />
+
+              <Button size="big" type="submit">
+                Salvar
+              </Button>
+
+              <Button onClick={closeProjectModal} size="small" color="gray">
+                Cancelar
+              </Button>
+            </form>
           </Modal>
         )}
       </Container>
