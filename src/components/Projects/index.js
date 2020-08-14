@@ -6,6 +6,7 @@ import { bindActionCreators } from "redux";
 import ProjectsActions from "~/store/ducks/projects";
 
 import { Container, Project } from "./styles";
+import Modal from "~/components/Modal";
 import Button from "~/styles/components/Button";
 
 class Projects extends Component {
@@ -42,6 +43,16 @@ class Projects extends Component {
             <p>{project.title}</p>
           </Project>
         ))}
+
+        {projects.projectModalOpen && (
+          <Modal>
+            <h1>Criar projeto</h1>
+
+            <from onSubmit={() => {}}>
+              <span>NOME</span>
+            </from>
+          </Modal>
+        )}
       </Container>
     );
   }
