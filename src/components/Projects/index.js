@@ -12,9 +12,25 @@ import Button from "~/styles/components/Button";
 class Projects extends Component {
   static propTypes = {
     getProjectsRequest: PropTypes.func.isRequired,
+    openProjectsModal: PropTypes.func.isRequired,
+    closeProjectsModal: PropTypes.func.isRequired,
+    createProjectsRequest: PropTypes.func.isRequired,
     activeTeam: PropTypes.shape({
       name: PropTypes.string,
     }),
+    projects: PropTypes.shape({
+      data: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number,
+          title: PropTypes.string,
+        })
+      ),
+      projectModalOpen: PropTypes.bool,
+    }).isRequired,
+  };
+
+  state = {
+    newProject: "",
   };
 
   componentDidMount() {
@@ -25,6 +41,19 @@ class Projects extends Component {
     }
   }
 
+  handleInputChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleCreateProject = (e) => {
+    e.preventDefault();
+
+    const { createProjectRequest } = this.props;
+    const { newProject } = this.state;
+
+    createProjectRequest(newProject);
+  };
+
   render() {
     const {
       activeTeam,
@@ -32,6 +61,8 @@ class Projects extends Component {
       openProjectModal,
       closeProjectModal,
     } = this.props;
+
+    const { newProject } = this.state;
     if (!activeTeam) return null;
     return (
       <Container>
@@ -53,9 +84,13 @@ class Projects extends Component {
           <Modal>
             <h1>Criar projeto</h1>
 
-            <form onSubmit={() => {}}>
+            <form onSubmit={this.handleCreateProject}>
               <span>NOME</span>
-              <input name="newProject" />
+              <input
+                name="newProject"
+                value={newProject}
+                onChange={this.handleInputChange}
+              />
 
               <Button size="big" type="submit">
                 Salvar
